@@ -3,6 +3,8 @@
 
 
 ## tk-spline
+> interpolation 属于插值
+
 [tk-spline](https://github.com/ttk592/spline)
 
 ```c++
@@ -10,3 +12,8 @@ tk::spline s;
 s.set_points(s_list, x_list);
 s.set_points(s_list, y_list);
 ```
+
+## tinyspline
+> bspline regression 属于拟合回归
+
+[tiny-spline-ros](https://github.com/pryre/tinyspline_ros)
