@@ -1,5 +1,3 @@
-#pragma once
-
 #include "rviz_tool/planner_viz.h"
 
 namespace {

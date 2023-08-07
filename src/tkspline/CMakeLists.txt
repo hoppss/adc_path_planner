@@ -1,0 +1,1 @@
+add_library(tkspline spline.cpp)

@@ -1,0 +1,1 @@
+add_library(tiny_spline tinysplinecpp.cpp  tinyspline.c)

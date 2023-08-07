@@ -2,7 +2,7 @@
 #include "common/type_tool.h"
 #include "receiver/receiver.h"
 #include "rviz_tool/planner_viz.h"
-#include "rviz_tool/rviz_tool.h"
+// #include "rviz_tool/rviz_tool.h"
 #include "tkspline/spline.h"
 
 int main(int argc, char** argv) {

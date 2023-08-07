@@ -13,38 +13,22 @@ namespace common {
 
 constexpr double kMathEpsilon = 1e-10;
 
-/**
- * @class Vec2d
- *
- * @brief Implements a class of 2-dimensional vectors.
- */
 class Vec2d {
  public:
-  //! Constructor which takes x- and y-coordinates.
   constexpr Vec2d(const double x, const double y) noexcept : x_(x), y_(y) {}
 
-  //! Constructor returning the zero vector.
   constexpr Vec2d() noexcept : Vec2d(0, 0) {}
 
-  //! Creates a unit-vector with a given angle to the positive x semi-axis
   static Vec2d CreateUnitVec2d(const double angle);
 
-  //! Getter for x component
   double x() const { return x_; }
-
-  //! Getter for y component
   double y() const { return y_; }
 
-  //! Setter for x component
   void set_x(const double x) { x_ = x; }
-
-  //! Setter for y component
   void set_y(const double y) { y_ = y; }
 
-  //! Gets the length of the vector
   double Length() const;
 
-  //! Gets the squared length of the vector
   double LengthSquare() const;
 
   //! Gets the angle between the vector and the positive x semi-axis
@@ -92,13 +76,10 @@ class Vec2d {
   //! Multiplies this Vec2d by a scalar
   Vec2d &operator*=(const double ratio);
 
-  //! Divides this Vec2d by a scalar
   Vec2d &operator/=(const double ratio);
 
-  //! Compares two Vec2d
   bool operator==(const Vec2d &other) const;
 
-  //! Returns a human-readable string representing this object
   std::string DebugString() const;
 
  protected:
