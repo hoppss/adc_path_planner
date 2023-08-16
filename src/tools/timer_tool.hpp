@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 
-namespace planner {
+namespace common {
 
 class Timer {
 public:
