@@ -1,26 +1,34 @@
+#pragma once
+
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
+#include <fstream>
+#include <iomanip>
 
-#include "reference_line/discrete_points_smoother.h"
-#include "rviz_tool/planner_viz.h"
+#include <absl/strings/str_split.h>
 
-#include "geometry_msgs/Pose.h"
-#include "ros/ros.h"
-#include "visualization_msgs/MarkerArray.h"
+#include "common/basic_type.hpp"
+#include "common/vec2d.h"
+#include "common/math_util.h"
 
-using common::Vec2d;
+#include "tools/log.h"
 
-int main(int argc, char** argv) {
-  ros::init(argc, argv, "smoother_app");
-  ros::NodeHandle node;
+double CalculateKappa(double x1, double y1, double x2, double y2, double x3,
+                      double y3);
 
-  std::string basic_path = std::getenv("HOME");
-  ROS_INFO("Hostname %s", basic_path.c_str());
+std::vector<double> getGlobalPathCurve(std::vector<common::State> &points,
+                                       double distance = 10);
 
-  std::string input_file_path;
-  std::vector<Vec2d> raw_pts, smoothed_pts;
-  std::vector<double> raw_kappas, smoothed_kappas;
+std::vector<double> getGlobalPathHeading(std::vector<common::Vec2d> &points);
 
-  DiscretePointsSmoother smoother;
-}
+void getGlobalAccumsS(std::vector<common::State> &points);
+
+void csvDataSaveHandle(const std::vector<common::State> &states,
+                       std::vector<common::Vec2d> &smoothed_kappa);
+
+bool ReadTrajectoryFile(const std::string &filename,
+                        std::vector<common::State> &complete_rtk_trajectory);
+
+void trajectoryToFile(std::string file_name,
+                      const std::vector<common::State> &trajectory_points);

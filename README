@@ -27,3 +27,27 @@ s.set_points(s_list, y_list);
 > bspline regression 属于拟合回归
 
 [tiny-spline-ros](https://github.com/pryre/tinyspline_ros)
+
+
+## fem smoother
+如果不考虑曲率约束就是只有bound 约束，属于线性约束，用osqp 求解
+如果考虑最小半径的曲率约束，那就是非线性约束了，用ipopt 或者sqp 求解
+
+曲率约束假设
+- 离散点是均匀的间距相等
+- 离散点是稠密的
+- 这样三个点全局角度的变化很小 （小角度假设）
+
+> 曲率约束推导详细见 DL-IAPS II-1
+[开发者说丨离散点曲线平滑原理](https://mp.weixin.qq.com/s?__biz=MzI1NjkxOTMyNQ==&amp;mid=2247492799&amp;idx=1&amp;sn=869a9dfcde89d2f04054bbf0da13aa2d&amp;scene=21#wechat_redirect)
+
+[MasonX - fem_pos_deviation_smoother 原理解析](https://zhuanlan.zhihu.com/p/595728795)
+
+[小作坊钳工-参考线平滑-FemPosDeviation-SQP](https://blog.csdn.net/mpt0816/article/details/127664861)
+
+[半杯茶的小酒杯-基于优化的离散点平滑算法](https://cloud.tencent.com/developer/article/2190924)
+
+## fem sqp 求解
+
+[论文推土机-离散点平滑的推导](https://zhuanlan.zhihu.com/p/542558404)
+## other

@@ -82,15 +82,16 @@ class FemPosDeviationOsqpInterface {
 
   // Weights in optimization cost function
   double weight_fem_pos_deviation_ = 1.0e5;  // 平滑项
-  double weight_path_length_ = 1.0;          // 紧凑项， 等长
-  double weight_ref_deviation_ = 1.0;        // 相似项
+  double weight_path_length_ = 1.0;          // 紧凑项，等长
+  double weight_ref_deviation_ = 1.0;        // 几何相似性
 
   // Settings of osqp
   int max_iter_ = 4000;
   double time_limit_ = 0.0;
-  bool verbose_ = false;
+  bool verbose_ = true;
   bool scaled_termination_ = true;
   bool warm_start_ = true;
+  bool pollishing_ = false;  // 是否修正admm 的粗解 ？
 
   // Optimization problem definitions
   int num_of_points_ = 0;

@@ -1,28 +1,32 @@
 #pragma once
 
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
 
 #include "common/vec2d.h"
 
 namespace common {
 
-struct PathPoint {
+struct AnchorPoint {
+  Vec2d path_point;
+  double lateral_bound = 0.0;
+  double longitudinal_bound = 0.0;
+  // enforce smoother to strictly follow this reference point
+  bool enforced = false;
+};
+
+struct State {
   double x;
   double y;
+  double z;
   double theta;
+  double kappa;
 
   double s;
-
-  double kappa;
-  double dkappa;
-  double ddkappa;
-  std::string lane_id;
-
-  // derivative of x and y w.r.t parametric parameter t in CosThetareferenceline
-  double x_derivative;
-  double y_derivative;
+  double t;  // timestamp
+  double v;
+  double a;
 };
 
 }  // namespace common

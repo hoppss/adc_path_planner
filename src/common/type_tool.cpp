@@ -9,3 +9,43 @@ std::vector<Vec2d> PoseMsg2Vec2d(const std::vector<Pose>& poses) {
 
   return result;
 }
+
+common::Vec2d vec2dToState(const common::State& state) {
+  return {state.x, state.y};
+}
+common::State stateToVec2d(const common::Vec2d& pt) {
+  common::State s;
+  s.x = pt.x();
+  s.y = pt.y();
+  return s;
+}
+
+void Vec2d2StateVec(const std::vector<common::Vec2d> &pts,
+                 std::vector<common::State> &states) {
+  if (pts.empty()) {
+    states.clear();
+    return;
+  }
+
+  for (const auto &pt : pts) {
+    common::State state;
+    state.x = pt.x();
+    state.y = pt.y();
+    states.emplace_back(std::move(state));
+  }
+}
+
+void StateToVec2dVec(const std::vector<common::State> &states,
+                std::vector<common::Vec2d> &pts) {
+  if (states.empty()) {
+    pts.clear();
+    return;
+  }
+
+  for (const auto &state : states) {
+    common::Vec2d pt;
+    pt.set_x(state.x);
+    pt.set_y(state.y);
+    pts.emplace_back(std::move(pt));
+  }
+}

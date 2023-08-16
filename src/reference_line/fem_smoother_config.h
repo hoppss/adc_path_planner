@@ -2,14 +2,6 @@
 #include "common/basic_type.hpp"
 #include "common/vec2d.h"
 
-struct AnchorPoint {
-  common::Vec2d path_point;
-  double lateral_bound = 0.0;
-  double longitudinal_bound = 0.0;
-  // enforce smoother to strictly follow this reference point
-  bool enforced = false;
-};
-
 struct FemSmootherConfig {
   bool use_sqp_solver;                 // default false, use osqp
   double max_constraint_interval;      // [default = 5]

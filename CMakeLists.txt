@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
                             abseil_cpp
 )
 find_package (glog REQUIRED)   #0.6.0 源码安装
+find_package(osqp REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS
@@ -51,7 +52,7 @@ set(COMMON_SRC  src/common/vec2d.cpp
                 src/rviz_tool/rviz_tool.cpp
                 src/rviz_tool/planner_viz.cpp
 
-                
+                src/reference_line/traj_file_tool.cpp
                 src/reference_line/discrete_points_smoother.cpp
 )
 
@@ -70,19 +71,21 @@ target_link_libraries(tk_test ${catkin_LIBRARIES}
 )
 
 ## discrete points smoother
-add_executable(smother_demo src/reference_line/smoother_demo.cpp
+add_executable(smoother_demo src/reference_line/smoother_demo.cpp
                             ${COMMON_SRC}
+                            src/reference_line/fem_pose_deviation_osqp_interface.cpp
 )
-add_dependencies(smother_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
+add_dependencies(smoother_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
                               ${catkin_EXPORTED_TARGETS}
 )
 
-target_link_libraries(smother_demo  ${catkin_LIBRARIES}
+target_link_libraries(smoother_demo  ${catkin_LIBRARIES}
                                     ${abseil_cpp_LIBRARIES}
-                                    # glog::glog
-                                    /usr/local/lib/libglog.so
+                                    glog::glog
+                                    # /usr/local/lib/libglog.so
 )
 
+target_link_libraries(smoother_demo PRIVATE osqp::osqp)
 
 ## glog
 add_executable(glog_demo src/app/glog_demo.cpp

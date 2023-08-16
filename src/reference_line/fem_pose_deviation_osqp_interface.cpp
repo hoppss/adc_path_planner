@@ -4,7 +4,8 @@
 #include <iostream>
 #include <limits>
 
-#include "reference_line/fem_pos_deviation_osqp_interface.h"
+#include "tools/log.h"
+#include "reference_line/fem_pose_deviation_osqp_interface.h"
 
 
 bool FemPosDeviationOsqpInterface::Solve() {
@@ -263,8 +264,8 @@ bool FemPosDeviationOsqpInterface::OptimizeWithOsqp(
   data->l = lower_bounds->data();
   data->u = upper_bounds->data();
 
-  *work = osqp_setup(data, settings);
-  // osqp_setup(work, data, settings);
+  // *work = osqp_setup(data, settings);  // apollo 使用这个老接口，apollo用的版本0.4.1
+  osqp_setup(work, data, settings);
 
   osqp_warm_start_x(*work, primal_warm_start->data());
 
