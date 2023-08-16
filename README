@@ -1,6 +1,16 @@
 # 无人驾驶路径规划 - 点滴
 
+## backward-cpp backtrace stack to log
+[backward](https://github.com/bombela/backward-cpp)
+### usage
+```cpp
+#include "backward.hpp"
 
+
+namespace backward {
+backward::SignalHandling sh;
+}
+```
 
 ## tk-spline
 > interpolation 属于插值
