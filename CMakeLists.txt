@@ -47,6 +47,9 @@ set(COMMON_SRC  src/common/vec2d.cpp
                 src/common/box2d.cpp
                 src/common/line_segment2d.cpp
                 src/common/math_util.cpp
+                src/common/linear_interpolation.cpp
+                src/common/discrete_points_math.cpp
+                src/common/discretized_path.cpp
                 src/common/type_tool.cpp
                 src/receiver/receiver.cpp
                 src/rviz_tool/rviz_tool.cpp
@@ -87,13 +90,26 @@ target_link_libraries(smoother_demo  ${catkin_LIBRARIES}
 
 target_link_libraries(smoother_demo PRIVATE osqp::osqp)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## glog
 add_executable(glog_demo src/app/glog_demo.cpp
 )
 add_dependencies(glog_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
                               ${catkin_EXPORTED_TARGETS}
 )
-
 target_link_libraries(glog_demo  ${catkin_LIBRARIES}
                                     ${abseil_cpp_LIBRARIES}
                                     glog::glog
