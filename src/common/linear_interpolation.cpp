@@ -35,24 +35,24 @@ SLPoint InterpolateUsingLinearApproximation(const SLPoint &p0,
 State InterpolateUsingLinearApproximation(const State &p0,
                                               const State &p1,
                                               const double s) {
-  double s0 = p0.s;
-  double s1 = p1.s;
+  double s0 = p0.s();
+  double s1 = p1.s();
 
   State path_point;
   double weight = (s - s0) / (s1 - s0);
-  double x = (1 - weight) * p0.x + weight * p1.x;
-  double y = (1 - weight) * p0.y + weight * p1.y;
-  double theta = slerp(p0.theta, p0.s, p1.theta, p1.s, s);
-  double kappa = (1 - weight) * p0.kappa + weight * p1.kappa;
-  double dkappa = (1 - weight) * p0.dkappa + weight * p1.dkappa;
-  double ddkappa = (1 - weight) * p0.ddkappa + weight * p1.ddkappa;
-  path_point.x = x;
-  path_point.y = y;
-  path_point.theta = theta;
-  path_point.kappa = kappa;
-  path_point.dkappa = dkappa;
-  path_point.ddkappa = ddkappa;
-  path_point.s = s;
+  double x = (1 - weight) * p0.x() + weight * p1.x();
+  double y = (1 - weight) * p0.y() + weight * p1.y();
+  double theta = slerp(p0.theta(), p0.s(), p1.theta(), p1.s(), s);
+  double kappa = (1 - weight) * p0.kappa() + weight * p1.kappa();
+  double dkappa = (1 - weight) * p0.dkappa() + weight * p1.dkappa();
+  double ddkappa = (1 - weight) * p0.ddkappa() + weight * p1.ddkappa();
+  path_point.set_x(x);
+  path_point.set_y(y);
+  path_point.set_theta ( theta);
+  path_point.set_kappa(kappa);
+  path_point.set_dkappa(dkappa);
+  path_point.set_ddkappa(ddkappa);
+  path_point.set_s(s);
   return path_point;
 }
 

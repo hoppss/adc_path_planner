@@ -57,6 +57,9 @@ set(COMMON_SRC  src/common/vec2d.cpp
 
                 src/reference_line/traj_file_tool.cpp
                 src/reference_line/discrete_points_smoother.cpp
+
+                src/reference_line/fem_pose_deviation_osqp_interface.cpp
+                src/reference_line/fem_pose_deviation_sqp_interface.cpp
 )
 
 ## tk_test
@@ -67,30 +70,25 @@ add_executable(tk_test  src/app/tk_test.cpp
 add_dependencies(tk_test  ${${PROJECT_NAME}_EXPORTED_TARGETS}
                           ${catkin_EXPORTED_TARGETS}
                           )
-
 target_link_libraries(tk_test ${catkin_LIBRARIES}
                               ${abseil_cpp_LIBRARIES}
                               glog::glog
+                              osqp::osqp
 )
 
 ## discrete points smoother
 add_executable(smoother_demo src/reference_line/smoother_demo.cpp
                             ${COMMON_SRC}
-                            src/reference_line/fem_pose_deviation_osqp_interface.cpp
 )
 add_dependencies(smoother_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
                               ${catkin_EXPORTED_TARGETS}
 )
-
 target_link_libraries(smoother_demo  ${catkin_LIBRARIES}
                                     ${abseil_cpp_LIBRARIES}
                                     glog::glog
                                     # /usr/local/lib/libglog.so
+                                    osqp::osqp
 )
-
-target_link_libraries(smoother_demo PRIVATE osqp::osqp)
-
-
 
 
 

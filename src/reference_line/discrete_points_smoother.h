@@ -4,7 +4,7 @@
 
 class DiscretePointsSmoother {
  public:
-  explicit DiscretePointsSmoother(const FemSmootherConfig& config);
+  explicit DiscretePointsSmoother(const FemPosDeviationSmootherConfig& config);
   ~DiscretePointsSmoother() = default;
 
   void SetAnchorPoints(const std::vector<common::AnchorPoint>& anchor_pts);
@@ -19,7 +19,7 @@ class DiscretePointsSmoother {
   bool FemPosSmooth(std::vector<std::pair<double, double>>* result_pts);
 
  private:
-  FemSmootherConfig config_;
+  FemPosDeviationSmootherConfig config_;
 
   std::vector<common::AnchorPoint> anchor_pts_;
 

@@ -17,7 +17,7 @@
 using common::Vec2d;
 using common::State;
 
-FemSmootherConfig config;
+FemPosDeviationSmootherConfig config;
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "smoother_app");

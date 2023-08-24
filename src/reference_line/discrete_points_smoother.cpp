@@ -5,7 +5,7 @@
 namespace {
 using common::Vec2d;
 }
-DiscretePointsSmoother::DiscretePointsSmoother(const FemSmootherConfig& config)
+DiscretePointsSmoother::DiscretePointsSmoother(const FemPosDeviationSmootherConfig& config)
     : config_(config) {
   AINFO << "Fem Osqp Interface";
 }

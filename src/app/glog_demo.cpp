@@ -5,6 +5,7 @@ int main(int argc, char* argv[]) {
   FLAGS_stderrthreshold = google::INFO;   // INFO 即 屏幕输出
   FLAGS_colorlogtostderr = true;          // severity 输出显示颜色区分
   google::InitGoogleLogging(argv[0]);     // log file name
+  google::ParseCommandLineFlags(&argc, &argv, true);
 
   // 0 1 2 3
   LOG(INFO) << "Found "

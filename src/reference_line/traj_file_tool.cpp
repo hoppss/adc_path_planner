@@ -1,11 +1,11 @@
-#include "common/basic_type.hpp"
-
 #include "reference_line/traj_file_tool.hpp"
+
+#include "common/basic_type.hpp"
 
 namespace {
 using common::AnchorPoint;
-using common::Vec2d;
 using common::State;
+using common::Vec2d;
 }  // namespace
 
 void getAnchorPoints(std::vector<Vec2d> &raw_center_line,
@@ -44,8 +44,8 @@ std::vector<double> getGlobalPathCurve(std::vector<common::State> &points,
   if (count < 2) return kappa;
 
   for (int i = 0; i < count; i++) {
-    px.push_back(points[i].x);
-    py.push_back(points[i].y);
+    px.push_back(points[i].x());
+    py.push_back(points[i].y());
   }
 
   for (int i = 0; i < count; ++i) {
@@ -75,10 +75,10 @@ std::vector<double> getGlobalPathCurve(std::vector<common::State> &points,
         k = 0.0;
       }
       kappa.push_back(k);
-      points[i].kappa = k;
+      points[i].set_kappa(k);
     } else {
       kappa.push_back(0);
-      points[i].kappa = 0.0;
+      points[i].set_kappa(0.0);
     }
   }
 
@@ -134,13 +134,13 @@ void getGlobalAccumsS(std::vector<State> &points) {
 
   for (size_t i = 0; i < points.size(); ++i) {
     if (i == 0) {
-      points[i].s = 0;
+      points[i].set_s(0);
       continue;
     }
 
-    points[i].s = points[i - 1].s +
-                        common::distance(points[i - 1].x, points[i].x,
-                                               points[i - 1].y, points[i].y);
+    points[i].set_s(points[i - 1].s() +
+                    common::distance(points[i - 1].x(), points[i].x(),
+                                     points[i - 1].y(), points[i].y()));
   }
 }
 
@@ -164,7 +164,7 @@ void csvDataSaveHandle(const std::vector<State> &states,
 
   if (!states.empty()) {
     for (auto &state : states) {
-      raw_kappa.emplace_back(state.kappa);
+      raw_kappa.emplace_back(state.kappa());
     }
 
     AINFO << "kappa result size " << raw_kappa.size() << s_kappa.size();
@@ -217,15 +217,15 @@ bool ReadTrajectoryFile(const std::string &filename,
     }
 
     common::State point;
-    point.x = std::stod(tokens[0]);
-    point.y = std::stod(tokens[1]);
-    point.z = std::stod(tokens[2]);
-    point.v = std::stod(tokens[3]);
-    point.a = std::stod(tokens[4]);
-    point.kappa = std::stod(tokens[5]);
-    point.t = std::stod(tokens[7]);
-    point.theta = std::stod(tokens[8]);
-    point.s = std::stod(tokens[10]);
+    point.set_x(std::stod(tokens[0]));
+    point.set_y(std::stod(tokens[1]));
+    // point.set_z(std::stod(tokens[2]));
+    point.set_v(std::stod(tokens[3]));
+    point.set_a(std::stod(tokens[4]));
+    point.set_kappa(std::stod(tokens[5]));
+    point.set_t(std::stod(tokens[7]));
+    point.set_theta(std::stod(tokens[8]));
+    point.set_s(std::stod(tokens[10]));
 
     complete_rtk_trajectory_.push_back(std::move(point));
   }
@@ -245,24 +245,24 @@ void trajectoryToFile(std::string file_name,
   // outfile << "@type:routing" << std::endl;
 
   for (size_t i = 0; i < trajectory_points.size(); i++) {
-    outfile << std::setprecision(12) << trajectory_points[i].x
+    outfile << std::setprecision(12) << trajectory_points[i].x()
             << ", "  // 0: UTM-x
-            << std::setprecision(12) << trajectory_points[i].y
+            << std::setprecision(12) << trajectory_points[i].y()
             << ", "         // 1: UTM-y
             << 0.0 << ", "  // 2: altitude
             << 0.0 << ", "  // 3: horizontal speed
             << 0.0 << ", "  // 4: acceleration
-            << std::setprecision(7) << trajectory_points[i].kappa
+            << std::setprecision(7) << trajectory_points[i].kappa()
             << ", "         //<< hypot(ins_info.longitudinal_speed ,
-                            //ins_info.lateral_speed) << ", "
+                            // ins_info.lateral_speed) << ", "
             << 0.0 << ", "  //<< hypot(ins_info.longitudinal_accelerate ,
-                            //ins_info.longitudinal_accelerate) << ", "
+                            // ins_info.longitudinal_accelerate) << ", "
             << 0.0 << ", "  // 7: delta time
-            << std::setprecision(7) << trajectory_points[i].theta
+            << std::setprecision(7) << trajectory_points[i].theta()
             << ", "         // 8: ins_info.yaw * M_PI / 180 - M_PI_2 << ", "
             << 0.0 << ", "  // 9: gear
-            << trajectory_points[i].s << ", "  // 10:
-            << 0.0 << ", "                           // 11
+            << trajectory_points[i].s() << ", "  // 10:
+            << 0.0 << ", "                     // 11
             << 0.0 << ", "  // 12: pilot mode: 0-manual, 1-autopilot
             << 0.0 << ", "  // 13
             << 0.0 << ", "  // 14
