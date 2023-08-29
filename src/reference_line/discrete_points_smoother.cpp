@@ -119,6 +119,7 @@ bool DiscretePointsSmoother::FemPosSmooth(
     }
   } else {
     AINFO << "start fem-sqp smooth -->";
+    config_.debug();
     FemPosDeviationSqpOsqpInterface fem_sqp_smoother;
     // setting
     fem_sqp_smoother.set_weight_fem_pos_deviation(config_.weight_fem_pos_deviation);

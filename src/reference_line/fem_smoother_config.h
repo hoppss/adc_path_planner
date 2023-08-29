@@ -7,8 +7,8 @@ struct FemPosDeviationSmootherConfig {
   double weight_ref_deviation = 1.0;
   double weight_path_length = 1.0;
   bool apply_curvature_constraint = false;
-  double weight_curvature_constraint_slack_var = 1000000;
-  double curvature_constraint = 0.3;
+  double weight_curvature_constraint_slack_var = 100;
+  double curvature_constraint = 0.2;
   bool use_sqp = false;
   double sqp_ftol = 1e-2;
   double sqp_ctol = 1e-2;
@@ -16,11 +16,16 @@ struct FemPosDeviationSmootherConfig {
   int sqp_sub_max_iter = 100;
 
   // osqp settings
-  int max_iter =100;
+  int max_iter =1000;
   double time_limit = 0.0;
   bool verbose = true;
   bool scaled_termination = true;
   bool warm_start = true;
+  void debug() {
+    std::cout << "fem-config: use_sqp " << use_sqp << std::endl;
+    std::cout << "fem-config: weight_curvature_constraint_slack_var " << weight_curvature_constraint_slack_var << std::endl;
+    std::cout << "fem-config: max_iter " << max_iter << std::endl;
+  }
 };
 
 struct IterativeAnchoringConfig {

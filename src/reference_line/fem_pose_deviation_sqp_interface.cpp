@@ -95,6 +95,7 @@ bool FemPosDeviationSqpOsqpInterface::Solve() {
 
   if (!initial_solve_res) {
     AERROR << "initial iteration solving fails";
+    AINFO << "max iterative " << max_iter_;
     osqp_cleanup(work);
     c_free(data->A);
     c_free(data->P);
@@ -102,6 +103,8 @@ bool FemPosDeviationSqpOsqpInterface::Solve() {
     c_free(settings);
     return false;
   }
+
+  AINFO << "[sqp initial ok]";
 
   // Sequential solution
 
@@ -164,7 +167,8 @@ bool FemPosDeviationSqpOsqpInterface::Solve() {
 
     ctol = CalculateConstraintViolation(opt_xy_);
 
-    ADEBUG << "ctol is " << ctol << ", at pen itr " << pen_itr;
+    AINFO << "ctol is " << ctol << ", at pen itr " << pen_itr << ", at sub itr " << sub_itr\
+          << "weight_curvature_constraint_slack_var " << weight_curvature_constraint_slack_var_;
 
     if (ctol < sqp_ctol_) {
       ADEBUG << "constraint satisfied at pen itr num " << pen_itr;
