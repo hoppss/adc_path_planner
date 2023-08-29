@@ -81,7 +81,7 @@ class FemPosDeviationOsqpInterface {
   std::vector<double> bounds_around_refs_;
 
   // Weights in optimization cost function
-  double weight_fem_pos_deviation_ = 1.0e5;  // 平滑项
+  double weight_fem_pos_deviation_ = 1.0e6;  // 平滑项
   double weight_path_length_ = 1.0;          // 紧凑项，等长
   double weight_ref_deviation_ = 1.0;        // 几何相似性
 
@@ -91,7 +91,7 @@ class FemPosDeviationOsqpInterface {
   bool verbose_ = true;
   bool scaled_termination_ = true;
   bool warm_start_ = true;
-  bool pollishing_ = false;  // 是否修正admm 的粗解 ？
+  bool pollishing_ = true;  // 是否修正admm 的粗解 ？
 
   // Optimization problem definitions
   int num_of_points_ = 0;

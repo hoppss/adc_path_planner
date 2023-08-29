@@ -11,6 +11,7 @@
 #include "common/basic_type.hpp"
 #include "common/vec2d.h"
 #include "common/math_util.h"
+#include "common/discrete_points_math.h"
 
 #include "tools/log.h"
 
@@ -32,3 +33,5 @@ bool ReadTrajectoryFile(const std::string &filename,
 
 void trajectoryToFile(std::string file_name,
                       const std::vector<common::State> &trajectory_points);
+
+bool generateStatesProfile(std::vector<common::State>& states);

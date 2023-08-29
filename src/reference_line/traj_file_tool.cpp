@@ -22,8 +22,7 @@ void getAnchorPoints(std::vector<Vec2d> &raw_center_line,
   }
 }
 
-double CalculateKappa(double x1, double y1, double x2, double y2, double x3,
-                      double y3) {
+double CalculateKappa(double x1, double y1, double x2, double y2, double x3, double y3) {
   double v1[] = {x1 - x2, y1 - y2};
   double v2[] = {x2 - x3, y2 - y3};
   double v3[] = {x3 - x1, y3 - y1};
@@ -68,8 +67,8 @@ std::vector<double> getGlobalPathCurve(std::vector<common::State> &points,
     if (dis_prev >= distance && dis_next >= distance) {
       prev = std::max(prev, 0);
       next = std::min(next, count - 1);
-      double k = CalculateKappa(px[prev], py[prev], px[curr], py[curr],
-                                px[next], py[next]);
+      double k =
+          CalculateKappa(px[prev], py[prev], px[curr], py[curr], px[next], py[next]);
       // ROS_INFO("i = %d, k = %.6f", i, k);
       if (std::isnan(k) != 0 || std::isinf(k) != 0) {
         k = 0.0;
@@ -138,9 +137,9 @@ void getGlobalAccumsS(std::vector<State> &points) {
       continue;
     }
 
-    points[i].set_s(points[i - 1].s() +
-                    common::distance(points[i - 1].x(), points[i].x(),
-                                     points[i - 1].y(), points[i].y()));
+    points[i].set_s(points[i - 1].s() + common::distance(points[i - 1].x(), points[i].x(),
+                                                         points[i - 1].y(),
+                                                         points[i].y()));
   }
 }
 
@@ -153,9 +152,8 @@ void csvDataSaveHandle(const std::vector<State> &states,
   struct tm *p;
   p = gmtime(&now_time);
   char filename[256] = {0};
-  sprintf(filename, "/home/uisee/femsmooth-%d-%d-%d-%d-%d-%d.csv",
-          1900 + p->tm_year, 1 + p->tm_mon, p->tm_mday, 8 + p->tm_hour,
-          p->tm_min, p->tm_sec);  // kappa 对比
+  sprintf(filename, "/home/uisee/femsmooth-%d-%d-%d-%d-%d-%d.csv", 1900 + p->tm_year,
+          1 + p->tm_mon, p->tm_mday, 8 + p->tm_hour, p->tm_min, p->tm_sec);  // kappa 对比
   std::fstream mystream;
   mystream.open(filename, std::ios_base::out);
 
@@ -169,8 +167,7 @@ void csvDataSaveHandle(const std::vector<State> &states,
 
     AINFO << "kappa result size " << raw_kappa.size() << s_kappa.size();
     for (size_t i = 0; i < std::min(raw_kappa.size(), s_kappa.size()); ++i) {
-      mystream << i << "," << raw_kappa[i] << "," << s_kappa[i] << ","
-               << std::endl;
+      mystream << i << "," << raw_kappa[i] << "," << s_kappa[i] << "," << std::endl;
     }
     mystream << std::endl;
     mystream.close();
@@ -209,8 +206,7 @@ bool ReadTrajectoryFile(const std::string &filename,
     getline(file_in, line);
     if (line == "" || line.find("nan") != std::string::npos) continue;
 
-    const std::vector<std::string> tokens =
-        absl::StrSplit(line, absl::ByAnyChar(","));
+    const std::vector<std::string> tokens = absl::StrSplit(line, absl::ByAnyChar(","));
     if (tokens.size() < 11) {
       AWARN << "[ReadTrajectoryFile]:the data dimension does not match" << line;
       continue;
@@ -245,11 +241,9 @@ void trajectoryToFile(std::string file_name,
   // outfile << "@type:routing" << std::endl;
 
   for (size_t i = 0; i < trajectory_points.size(); i++) {
-    outfile << std::setprecision(12) << trajectory_points[i].x()
-            << ", "  // 0: UTM-x
-            << std::setprecision(12) << trajectory_points[i].y()
-            << ", "         // 1: UTM-y
-            << 0.0 << ", "  // 2: altitude
+    outfile << std::setprecision(12) << trajectory_points[i].x() << ", "  // 0: UTM-x
+            << std::setprecision(12) << trajectory_points[i].y() << ", "  // 1: UTM-y
+            << 0.0 << ", "                                                // 2: altitude
             << 0.0 << ", "  // 3: horizontal speed
             << 0.0 << ", "  // 4: acceleration
             << std::setprecision(7) << trajectory_points[i].kappa()
@@ -262,19 +256,48 @@ void trajectoryToFile(std::string file_name,
             << ", "         // 8: ins_info.yaw * M_PI / 180 - M_PI_2 << ", "
             << 0.0 << ", "  // 9: gear
             << trajectory_points[i].s() << ", "  // 10:
-            << 0.0 << ", "                     // 11
-            << 0.0 << ", "  // 12: pilot mode: 0-manual, 1-autopilot
-            << 0.0 << ", "  // 13
-            << 0.0 << ", "  // 14
-            << 0.0 << ", "  // 15:
-            << 0.0 << ", "  // 16:
-            << 0.0 << ", "  // 17
-            << 0.0 << ", "  // 18: yaw_rate
-            << 0.0 << ", "  // 19
-            << 0.0 << ", "  // 20
-            << 0.0          // 21: lat_acc
+            << 0.0 << ", "                       // 11
+            << 0.0 << ", "                       // 12: pilot mode: 0-manual, 1-autopilot
+            << 0.0 << ", "                       // 13
+            << 0.0 << ", "                       // 14
+            << 0.0 << ", "                       // 15:
+            << 0.0 << ", "                       // 16:
+            << 0.0 << ", "                       // 17
+            << 0.0 << ", "                       // 18: yaw_rate
+            << 0.0 << ", "                       // 19
+            << 0.0 << ", "                       // 20
+            << 0.0                               // 21: lat_acc
             << std::endl;
   }
   outfile.close();
   AINFO << "traj save to file " << file_name;
+}
+
+bool generateStatesProfile(std::vector<common::State>& states) {
+  // Compute path profile
+  std::vector<double> headings;
+  std::vector<double> kappas;
+  std::vector<double> dkappas;
+  std::vector<double> accumulated_s;
+
+  size_t points_size = states.size();
+  std::vector<std::pair<double, double>> xy_points;
+
+  for (size_t i = 0; i < points_size; ++i) {
+    xy_points.emplace_back(states[i].x(), states[i].y());
+  }
+
+  if (!common::DiscretePointsMath::ComputePathProfile(
+          xy_points, &headings, &accumulated_s, &kappas, &dkappas)) {
+    return false;
+  }
+
+  for (size_t i = 0; i < points_size; ++i) {
+    states[i].set_theta(headings[i]);
+    // std::cout << i << ", heading " << headings[i] << "t: " << states[i].theta() << std::endl;
+    states[i].set_kappa(kappas[i]);
+    states[i].set_s(accumulated_s[i]);
+  }
+
+  return true;
 }

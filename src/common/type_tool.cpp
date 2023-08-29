@@ -20,7 +20,7 @@ common::State stateToVec2d(const common::Vec2d& pt) {
   return s;
 }
 
-void Vec2d2StateVec(const std::vector<common::Vec2d> &pts,
+void Vec2dToStateVec(const std::vector<common::Vec2d> &pts,
                  std::vector<common::State> &states) {
   if (pts.empty()) {
     states.clear();

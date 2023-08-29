@@ -10,6 +10,8 @@ find_package(catkin REQUIRED COMPONENTS
                             geometry_msgs
                             nav_msgs
                             abseil_cpp
+                            tf2_ros
+                            tf2_geometry_msgs
 )
 find_package (glog REQUIRED)   #0.6.0 源码安装
 find_package(osqp REQUIRED)
@@ -56,6 +58,8 @@ set(COMMON_SRC  src/common/vec2d.cpp
                 src/rviz_tool/planner_viz.cpp
 
                 src/reference_line/traj_file_tool.cpp
+                src/reference_line/uos_traj_file_tool.cpp
+
                 src/reference_line/discrete_points_smoother.cpp
 
                 src/reference_line/fem_pose_deviation_osqp_interface.cpp
@@ -76,7 +80,7 @@ target_link_libraries(tk_test ${catkin_LIBRARIES}
                               osqp::osqp
 )
 
-## discrete points smoother
+# discrete points smoother
 add_executable(smoother_demo src/reference_line/smoother_demo.cpp
                             ${COMMON_SRC}
 )
@@ -90,6 +94,18 @@ target_link_libraries(smoother_demo  ${catkin_LIBRARIES}
                                     osqp::osqp
 )
 
+add_executable(uos_viz_demo src/reference_line/uos_viz_demo.cpp
+                            ${COMMON_SRC}
+)
+add_dependencies(uos_viz_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
+                              ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(uos_viz_demo  ${catkin_LIBRARIES}
+                                    ${abseil_cpp_LIBRARIES}
+                                    glog::glog
+                                    # /usr/local/lib/libglog.so
+                                    osqp::osqp
+)
 
 
 
