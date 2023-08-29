@@ -53,6 +53,7 @@ set(COMMON_SRC  src/common/vec2d.cpp
                 src/common/discrete_points_math.cpp
                 src/common/discretized_path.cpp
                 src/common/type_tool.cpp
+                src/common/vehicle_config_helper.cpp
                 src/receiver/receiver.cpp
                 src/rviz_tool/rviz_tool.cpp
                 src/rviz_tool/planner_viz.cpp

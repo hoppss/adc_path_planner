@@ -101,4 +101,51 @@ struct SLPoint {
   double s;
   double l;
 };
+
+struct VehicleParam {
+  std::string brand;
+  std::string vehicle_id;
+
+  // Car center point is car reference point, i.e., center of rear axle.
+  double front_edge_to_center;
+  double back_edge_to_center;
+  double left_edge_to_center;
+  double right_edge_to_center;
+
+  double length;
+  double width;
+  double height;
+
+  double min_turn_radius;
+  double max_acceleration;
+  double max_deceleration;
+
+  // The following items are used to compute trajectory constraints in
+  // planning/control/canbus,
+  // vehicle max steer angle
+  double max_steer_angle;
+  // vehicle max steer rate; how fast can the steering wheel turn.
+  double max_steer_angle_rate;
+  // vehicle min steer rate;
+  double min_steer_angle_rate;
+  // ratio between the turn of steering wheel and the turn of wheels
+  double steer_ratio;
+  // the distance between the front and back wheels L
+  double wheel_base;
+  // Tire effective rolling radius (vertical distance between the wheel center
+  // and the ground).
+  double wheel_rolling_radius;
+
+  // minimum differentiable vehicle speed, in m/s
+  float max_abs_speed_when_stopped;
+
+  // minimum value get from chassis.brake, in percentage
+  double brake_deadzone;
+  // minimum value get from chassis.throttle, in percentage
+  double throttle_deadzone;
+};
+
+struct VehicleConfig {
+  VehicleParam vehicle_param;
+};
 }  // namespace common
