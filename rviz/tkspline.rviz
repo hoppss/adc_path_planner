@@ -122,9 +122,9 @@ Visualization Manager:
       Class: rviz/Path
       Color: 115; 210; 22
       Enabled: true
-      Head Diameter: 0.30000001192092896
-      Head Length: 0.20000000298023224
-      Length: 0.20000000298023224
+      Head Diameter: 0.20000000298023224
+      Head Length: 0.10000000149011612
+      Length: 0.10000000149011612
       Line Style: Lines
       Line Width: 0.029999999329447746
       Name: CurvePath
@@ -133,7 +133,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Pose Color: 255; 85; 255
-      Pose Style: None
+      Pose Style: Axes
       Queue Size: 10
       Radius: 0.009999999776482582
       Shaft Diameter: 0.10000000149011612
@@ -166,13 +166,13 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Class: rviz/MarkerArray
-      Enabled: false
+      Enabled: true
       Marker Topic: /curve/markers
       Name: Spline
       Namespaces:
         {}
       Queue Size: 100
-      Value: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -200,7 +200,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: 0
+      Angle: 1.5599993467330933
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -210,10 +210,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 103.7446060180664
+      Scale: 228.00119018554688
       Target Frame: <Fixed Frame>
-      X: 0.23687240481376648
-      Y: 3.687523365020752
+      X: 0.5734971761703491
+      Y: -0.764141857624054
     Saved: ~
 Window Geometry:
   Displays:

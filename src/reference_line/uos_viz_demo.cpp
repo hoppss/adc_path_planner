@@ -11,8 +11,8 @@ int main(int argc, char** argv) {
   PlannerViz viz(node);
 
   std::string file_path = std::getenv("HOME") + std::string("/UISEE_LOGS/");
-  std::string file_name_0 = std::string("hybrid_astar_0.csv");
-  std::string file_name_1 = std::string("hybrid_astar_smoothed_0.csv");
+  std::string file_name_0 = std::string("hybrid_astar.csv");
+  std::string file_name_1 = std::string("hybrid_astar_smoothed.csv");
   std::vector<State> raw_traj;
   std::vector<State> smoothed_traj;
 

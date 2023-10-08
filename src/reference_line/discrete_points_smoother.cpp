@@ -90,16 +90,17 @@ bool DiscretePointsSmoother::FemPosSmooth(
     AINFO << "start fem-osqp smooth -->";
     // smoother
     FemPosDeviationOsqpInterface fem_qp_smoother;
-    // fem_qp_smoother.set_verbose(config_.verbose);
-    // fem_qp_smoother.set_warm_start(config_.warm_start);
-    // fem_qp_smoother.set_time_limit(config_.time_limit);
-    // fem_qp_smoother.set_scaled_termination(config_.scaled_termination);
-    // fem_qp_smoother.set_max_iter(config_.max_iter);
+    fem_qp_smoother.set_verbose(config_.verbose);
+    fem_qp_smoother.set_warm_start(config_.warm_start);
+    fem_qp_smoother.set_time_limit(config_.time_limit);
+    fem_qp_smoother.set_scaled_termination(config_.scaled_termination);
+    fem_qp_smoother.set_max_iter(config_.max_iter);
 
     // weight
     fem_qp_smoother.set_weight_fem_pos_deviation(config_.weight_fem_pos_deviation);
     fem_qp_smoother.set_weight_path_length(config_.weight_path_length);
     fem_qp_smoother.set_weight_ref_deviation(config_.weight_ref_deviation);
+
     // data
     fem_qp_smoother.set_ref_points(raw_point2d_);
     fem_qp_smoother.set_bounds_around_refs(anchorpoints_lateralbound_);
@@ -136,6 +137,10 @@ bool DiscretePointsSmoother::FemPosSmooth(
     fem_sqp_smoother.set_sqp_sub_max_iter(config_.sqp_sub_max_iter);
 
     fem_sqp_smoother.set_max_iter(config_.max_iter);
+    fem_sqp_smoother.set_time_limit(config_.time_limit);
+    fem_sqp_smoother.set_warm_start(config_.warm_start);
+    fem_sqp_smoother.set_scaled_termination(config_.scaled_termination);
+    fem_sqp_smoother.set_verbose(true);
     // data
     fem_sqp_smoother.set_ref_points(raw_point2d_);
     fem_sqp_smoother.set_bounds_around_refs(anchorpoints_lateralbound_);

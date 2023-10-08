@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
   PlannerViz viz(node);
 
   std::string home_path = std::getenv("HOME") + std::string("/UISEE_LOGS/");
-  std::string target = "hybrid_astar_1.csv";
+  std::string target = "hybrid_astar.csv";
 
   std::string input_file_path = home_path + target;
   // std::string output_file_path = home_path + "/" + target + "filter.csv";
