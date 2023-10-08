@@ -46,10 +46,14 @@ set(TINYSPLINE_SRC  src/tineyspline/tinysplinecpp.cpp
                     src/tineyspline/tinyspline.c)
 
 set(COMMON_SRC  src/common/vec2d.cpp
+                src/common/aabox2d.cpp
                 src/common/box2d.cpp
                 src/common/line_segment2d.cpp
                 src/common/math_util.cpp
                 src/common/linear_interpolation.cpp
+                src/common/polygon2d.cpp
+                src/common/obstacle.cpp
+
                 src/common/discrete_points_math.cpp
                 src/common/discretized_path.cpp
                 src/common/type_tool.cpp
@@ -65,6 +69,14 @@ set(COMMON_SRC  src/common/vec2d.cpp
 
                 src/reference_line/fem_pose_deviation_osqp_interface.cpp
                 src/reference_line/fem_pose_deviation_sqp_interface.cpp
+
+                # collision check
+                src/common/collision_checker.cpp
+
+                # open space
+                src/open_space/coarse_trajectory_generator/node3d.cpp
+                src/open_space/coarse_trajectory_generator/reeds_sheep_path.cpp
+
 )
 
 ## tk_test

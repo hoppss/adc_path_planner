@@ -19,18 +19,18 @@ struct AnchorPoint {
 
 class State {
  public:
-  double set_x(double _x) { x_ = _x; };
-  double set_y(double _y) { y_ = _y; };
-  double set_theta(double _theta) { theta_ = _theta; };
-  double set_s(double _s) { s_ = _s; };
+  void set_x(double _x) { x_ = _x; };
+  void set_y(double _y) { y_ = _y; };
+  void set_theta(double _theta) { theta_ = _theta; };
+  void set_s(double _s) { s_ = _s; };
 
-  double set_kappa(double _kappa) { kappa_ = _kappa; };
-  double set_dkappa(double _dkappa) { dkappa_ = _dkappa; };
-  double set_ddkappa(double _ddkappa) { ddkappa_ = _ddkappa; };
+  void set_kappa(double _kappa) { kappa_ = _kappa; };
+  void set_dkappa(double _dkappa) { dkappa_ = _dkappa; };
+  void set_ddkappa(double _ddkappa) { ddkappa_ = _ddkappa; };
 
-  double set_v(double _v) { v_ = _v; };
-  double set_t(double _t) { t_ = _t; };
-  double set_a(double _a) { a_ = _a; };
+  void set_v(double _v) { v_ = _v; };
+  void set_t(double _t) { t_ = _t; };
+  void set_a(double _a) { a_ = _a; };
 
   double s() const { return s_; };
   double x() const { return x_; };
@@ -103,46 +103,60 @@ struct SLPoint {
 };
 
 struct VehicleParam {
+
+  double width() const { return width_;};
+  double length() const { return length_;};
+  double front_edge_to_center() const { return front_edge_to_center_;};
+  double back_edge_to_center() const { return back_edge_to_center_;};
+  double left_edge_to_center() const { return left_edge_to_center_;};
+  double right_edge_to_center() const { return right_edge_to_center_;};
+
+  double min_turn_radius() const { return min_turn_radius_;};
+  double max_steer_angle() const { return max_steer_angle_;};
+  double steer_ratio() const { return steer_ratio_;};
+  double wheel_base() const { return wheel_base_;};
+
+
   std::string brand;
   std::string vehicle_id;
 
   // Car center point is car reference point, i.e., center of rear axle.
-  double front_edge_to_center;
-  double back_edge_to_center;
-  double left_edge_to_center;
-  double right_edge_to_center;
+  double front_edge_to_center_;
+  double back_edge_to_center_;
+  double left_edge_to_center_;
+  double right_edge_to_center_;
 
-  double length;
-  double width;
-  double height;
+  double length_;
+  double width_;
+  double height_;
 
-  double min_turn_radius;
-  double max_acceleration;
-  double max_deceleration;
+  double min_turn_radius_;
+  double max_acceleration_;
+  double max_deceleration_;
 
   // The following items are used to compute trajectory constraints in
   // planning/control/canbus,
   // vehicle max steer angle
-  double max_steer_angle;
+  double max_steer_angle_;
   // vehicle max steer rate; how fast can the steering wheel turn.
-  double max_steer_angle_rate;
+  double max_steer_angle_rate_;
   // vehicle min steer rate;
-  double min_steer_angle_rate;
+  double min_steer_angle_rate_;
   // ratio between the turn of steering wheel and the turn of wheels
-  double steer_ratio;
+  double steer_ratio_;
   // the distance between the front and back wheels L
-  double wheel_base;
+  double wheel_base_;
   // Tire effective rolling radius (vertical distance between the wheel center
   // and the ground).
-  double wheel_rolling_radius;
+  double wheel_rolling_radius_;
 
   // minimum differentiable vehicle speed, in m/s
-  float max_abs_speed_when_stopped;
+  float max_abs_speed_when_stopped_;
 
   // minimum value get from chassis.brake, in percentage
-  double brake_deadzone;
+  double brake_deadzone_;
   // minimum value get from chassis.throttle, in percentage
-  double throttle_deadzone;
+  double throttle_deadzone_;
 };
 
 struct VehicleConfig {
