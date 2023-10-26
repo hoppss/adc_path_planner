@@ -1,4 +1,4 @@
-知乎- 宫城浪人
+## 知乎- 宫城浪人
 https://zhuanlan.zhihu.com/p/548096462
 
 
@@ -8,3 +8,7 @@ cd .../devel/lib/adc_path_planner
 
 ./adc_plan
 python3 show_animation.py
+
+
+## 知乎 - silver bullet
+https://zhuanlan.zhihu.com/p/95680738
