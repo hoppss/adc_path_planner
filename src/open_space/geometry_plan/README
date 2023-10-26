@@ -1,0 +1,10 @@
+知乎- 宫城浪人
+https://zhuanlan.zhihu.com/p/548096462
+
+
+
+cp reverse_vehicle_1.txt  show_animation.py  .../devel/lib/adc_path_planner/
+cd .../devel/lib/adc_path_planner
+
+./adc_plan
+python3 show_animation.py

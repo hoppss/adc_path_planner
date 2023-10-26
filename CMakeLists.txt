@@ -76,7 +76,6 @@ set(COMMON_SRC  src/common/vec2d.cpp
                 # open space
                 src/open_space/coarse_trajectory_generator/node3d.cpp
                 src/open_space/coarse_trajectory_generator/reeds_sheep_path.cpp
-
 )
 
 ## tk_test
@@ -107,6 +106,7 @@ target_link_libraries(smoother_demo  ${catkin_LIBRARIES}
                                     osqp::osqp
 )
 
+## show uviz traj
 add_executable(uos_viz_demo src/reference_line/uos_viz_demo.cpp
                             ${COMMON_SRC}
 )
@@ -117,6 +117,23 @@ target_link_libraries(uos_viz_demo  ${catkin_LIBRARIES}
                                     ${abseil_cpp_LIBRARIES}
                                     glog::glog
                                     # /usr/local/lib/libglog.so
+                                    osqp::osqp
+)
+
+
+## geometry apa
+add_executable(apa_plan     src/open_space/geometry_plan/main.cc
+                            src/open_space/geometry_plan/geometry_parking_utils.cc
+                            src/open_space/geometry_plan/line_circle_connection.cc
+                            src/open_space/geometry_plan/reverse_verticle_parking.cc
+                            ${COMMON_SRC}
+)
+# add_dependencies(apa_plan ${${PROJECT_NAME}_EXPORTED_TARGETS}
+#                               ${catkin_EXPORTED_TARGETS}
+# )
+target_link_libraries(apa_plan  ${catkin_LIBRARIES}
+                                    ${abseil_cpp_LIBRARIES}
+                                    glog::glog
                                     osqp::osqp
 )
 
