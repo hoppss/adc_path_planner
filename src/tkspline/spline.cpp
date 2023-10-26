@@ -9,7 +9,7 @@
 
 // band_matrix implementation
 // -------------------------
-#include "tkspline/spline.h"
+#include "spline.h"
 
 namespace tk {
 

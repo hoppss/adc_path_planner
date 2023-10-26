@@ -18,7 +18,7 @@ find_package(osqp REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS
-  LIBRARIES
+  LIBRARIES planner_common
   DEPENDS
 )
 
@@ -28,22 +28,11 @@ include_directories(
     src
     ${catkin_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIRS}
-    # ${glog_INCLUDE_DIRS}
+    ${glog_INCLUDE_DIRS}
     /usr/local/include
 )
 
 link_directories(/usr/local/lib/)
-# message("glog found ?  ${glog_FOUND}")  ## 1
-# message("glog include dir: ${glog_INCLUDE_DIRS}   ${glog_INCLUDES}")  ## empty
-# message("glog lib dir: ${glog_LIBRARIES}")  ## empty
-
-
-# add_subdirectory(src/tkspline)
-# add_subdirectory(src/tinyspline)
-
-set(TKSPLINE_SRC    src/tkspline/spline.cpp)
-set(TINYSPLINE_SRC  src/tineyspline/tinysplinecpp.cpp  
-                    src/tineyspline/tinyspline.c)
 
 set(COMMON_SRC  src/common/vec2d.cpp
                 src/common/aabox2d.cpp
@@ -77,92 +66,23 @@ set(COMMON_SRC  src/common/vec2d.cpp
                 src/open_space/coarse_trajectory_generator/node3d.cpp
                 src/open_space/coarse_trajectory_generator/reeds_sheep_path.cpp
 )
-
-## tk_test
-add_executable(tk_test  src/app/tk_test.cpp
-                        ${COMMON_SRC}
-                        ${TKSPLINE_SRC}
-)
-add_dependencies(tk_test  ${${PROJECT_NAME}_EXPORTED_TARGETS}
-                          ${catkin_EXPORTED_TARGETS}
-                          )
-target_link_libraries(tk_test ${catkin_LIBRARIES}
+# basic library
+add_library(planner_common ${COMMON_SRC})
+target_link_libraries(planner_common ${catkin_LIBRARIES}
                               ${abseil_cpp_LIBRARIES}
                               glog::glog
                               osqp::osqp
 )
 
-# discrete points smoother
-add_executable(smoother_demo src/reference_line/smoother_demo.cpp
-                            ${COMMON_SRC}
-)
-add_dependencies(smoother_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
-                              ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(smoother_demo  ${catkin_LIBRARIES}
-                                    ${abseil_cpp_LIBRARIES}
-                                    glog::glog
-                                    # /usr/local/lib/libglog.so
-                                    osqp::osqp
-)
-
-## show uviz traj
-add_executable(uos_viz_demo src/reference_line/uos_viz_demo.cpp
-                            ${COMMON_SRC}
-)
-add_dependencies(uos_viz_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
-                              ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(uos_viz_demo  ${catkin_LIBRARIES}
-                                    ${abseil_cpp_LIBRARIES}
-                                    glog::glog
-                                    # /usr/local/lib/libglog.so
-                                    osqp::osqp
-)
-
-
-## geometry apa
-add_executable(apa_plan     src/open_space/geometry_plan/main.cc
-                            src/open_space/geometry_plan/geometry_parking_utils.cc
-                            src/open_space/geometry_plan/line_circle_connection.cc
-                            src/open_space/geometry_plan/reverse_verticle_parking.cc
-                            ${COMMON_SRC}
-)
-# add_dependencies(apa_plan ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#                               ${catkin_EXPORTED_TARGETS}
-# )
-target_link_libraries(apa_plan  ${catkin_LIBRARIES}
-                                    ${abseil_cpp_LIBRARIES}
-                                    glog::glog
-                                    osqp::osqp
-)
-
-
-
-
-
-
-
-
-
-
-
-
+########## sub directory project ##########
 ## glog
-add_executable(glog_demo src/app/glog_demo.cpp
-)
-add_dependencies(glog_demo ${${PROJECT_NAME}_EXPORTED_TARGETS}
-                              ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(glog_demo  ${catkin_LIBRARIES}
-                                    ${abseil_cpp_LIBRARIES}
-                                    glog::glog
-)
+add_subdirectory(src/app)
 
+# discrete points smoother
+add_subdirectory(src/reference_line)
 
+#tk spline demo
+add_subdirectory(src/tkspline)
 
-# install(TARGETS  tk_test
-#         ARCHIVE DESTINATION
-#         LIBRARY DESTINATION
-#         RUNTIME DESTINATION ${CATKIN_PACKAGE_DEVEL_DESTINATION}
-# )
+#apa parking plan
+add_subdirectory(src/open_space/geometry_plan)
