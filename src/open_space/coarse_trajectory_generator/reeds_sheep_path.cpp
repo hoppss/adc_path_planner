@@ -8,8 +8,7 @@ ReedShepp::ReedShepp(const common::VehicleParam& vehicle_param,
       planner_open_space_config_(open_space_conf) {
   max_kappa_ = std::tan(vehicle_param_.max_steer_angle() *
                         planner_open_space_config_.warm_start_config
-                            .traj_kappa_contraint_ratio /
-                        vehicle_param_.steer_ratio()) /
+                            .traj_kappa_contraint_ratio) /
                vehicle_param_.wheel_base();
   AINFO << "max kappa: " << max_kappa_;
 }
@@ -99,7 +98,6 @@ bool ReedShepp::GenerateRSPs(const std::shared_ptr<Node3d> start_node,
                              const std::shared_ptr<Node3d> end_node,
                              std::vector<ReedSheppPath>* all_possible_paths) {
   if (FLAGS_enable_parallel_hybrid_a) {
-    // AINFO << "parallel hybrid a*";
     if (!GenerateRSPPar(start_node, end_node, all_possible_paths)) {
       ADEBUG << "Fail to generate general profile of different RSPs";
       return false;

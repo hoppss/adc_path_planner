@@ -96,5 +96,7 @@ class VehicleConfigHelper {
   static bool is_init_;
 };
 
+double cal_vehicle_min_radius(const VehicleParam& vehicle_param);
+
 }  // namespace common
 

@@ -28,6 +28,7 @@ Node3d::Node3d(double x, double y, double phi,
   y_grid_ = static_cast<int>(
       (y_ - XYbounds[2]) /
       open_space_conf.warm_start_config.xy_grid_resolution);
+  // -PI: 0, index, PI: 2PI, end index
   phi_grid_ = static_cast<int>(
       (phi_ - (-M_PI)) /
       open_space_conf.warm_start_config.phi_grid_resolution);

@@ -13,7 +13,7 @@ struct WarmStartConfig {
   double traj_gear_switch_penalty = 10.0;
   double traj_steer_penalty = 100.0;
   double traj_steer_change_penalty = 10.0;
-  double traj_kappa_contraint_ratio = 0.7;
+  double traj_kappa_contraint_ratio = 1.0;
   // Grid a star for heuristic
   double grid_a_star_xy_resolution = 0.1;
   double node_radius = 0.5;

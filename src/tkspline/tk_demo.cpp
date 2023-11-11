@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
   ros::Rate r(10);
 
   while (ros::ok()) {
-    if (recv.is_ready_) {
+    if (recv.isReady()) {
       // tkspline
       auto poses = recv.getPoses();
       std::vector<double> x_list, y_list, s_list;

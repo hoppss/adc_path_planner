@@ -19,6 +19,9 @@ struct AnchorPoint {
 
 class State {
  public:
+  State() = default;
+  State(double x, double y, double theta) : x_(x), y_(y), theta_(theta) {};
+
   void set_x(double _x) { x_ = _x; };
   void set_y(double _y) { y_ = _y; };
   void set_theta(double _theta) { theta_ = _theta; };
@@ -113,7 +116,6 @@ struct VehicleParam {
 
   double min_turn_radius() const { return min_turn_radius_;};
   double max_steer_angle() const { return max_steer_angle_;};
-  double steer_ratio() const { return steer_ratio_;};
   double wheel_base() const { return wheel_base_;};
 
 
@@ -134,16 +136,12 @@ struct VehicleParam {
   double max_acceleration_;
   double max_deceleration_;
 
-  // The following items are used to compute trajectory constraints in
-  // planning/control/canbus,
-  // vehicle max steer angle
+  // vehicle front wheel max steer angle
   double max_steer_angle_;
   // vehicle max steer rate; how fast can the steering wheel turn.
   double max_steer_angle_rate_;
   // vehicle min steer rate;
   double min_steer_angle_rate_;
-  // ratio between the turn of steering wheel and the turn of wheels
-  double steer_ratio_;
   // the distance between the front and back wheels L
   double wheel_base_;
   // Tire effective rolling radius (vertical distance between the wheel center

@@ -9,12 +9,10 @@ VehicleConfig VehicleConfigHelper::vehicle_config_;
 bool VehicleConfigHelper::is_init_ = false;
 
 // TODO: 单例模式， 默认构造函数
-// VehicleConfigHelper::VehicleConfigHelper() {}
 
 void VehicleConfigHelper::Init() {
   // Init(FLAGS_vehicle_config_path);
-  // hardcode param
-  AINFO << "VehicleConfigHelper Once";
+  AINFO << "VehicleConfigHelper hard code Once";
   vehicle_config_.vehicle_param.brand = "LINCOLN_MKZ";
   vehicle_config_.vehicle_param.vehicle_id = "car1";
   vehicle_config_.vehicle_param.front_edge_to_center_ = 3.89;
@@ -25,9 +23,9 @@ void VehicleConfigHelper::Init() {
   vehicle_config_.vehicle_param.width_ = 2.11;
   vehicle_config_.vehicle_param.height_ = 1.48;
   vehicle_config_.vehicle_param.min_turn_radius_ = 5.05386147161;
-  vehicle_config_.vehicle_param.max_steer_angle_ = 8.20304748437;
+  //8.20304748437 / 16 = 0.51269 rad,  29.4 degree
+  vehicle_config_.vehicle_param.max_steer_angle_ = 0.51269;
   vehicle_config_.vehicle_param.max_steer_angle_rate_ = 8.55211;
-  vehicle_config_.vehicle_param.steer_ratio_ = 16;
   vehicle_config_.vehicle_param.wheel_base_ = 2.8448;
 
   is_init_ = true;
@@ -73,4 +71,7 @@ common::Box2d VehicleConfigHelper::GetBoundingBox(const common::State &path_poin
                        vehicle_param.width());
 }
 
+double cal_vehicle_min_radius(const VehicleParam& vehicle_param) {
+  return vehicle_param.wheel_base() / std::tan(vehicle_param.max_steer_angle());
+}
 }  // namespace common

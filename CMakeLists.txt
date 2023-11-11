@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(adc_path_planner)
 
-add_compile_options(--std=c++11)
+add_compile_options(--std=c++14)
 
 find_package(catkin REQUIRED COMPONENTS 
                             roscpp
@@ -85,4 +85,5 @@ add_subdirectory(src/reference_line)
 add_subdirectory(src/tkspline)
 
 #apa parking plan
+add_subdirectory(src/open_space)
 add_subdirectory(src/open_space/geometry_plan)

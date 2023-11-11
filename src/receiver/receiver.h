@@ -25,13 +25,29 @@ public:
     return origin_poses_;
   }
 
-  bool is_ready_{false};
+  bool isReady() const {
+    return has_start_ && has_goal_;
+  }
+  void reset() {
+    has_start_ = has_goal_ = false;
+  }
+
+  const geometry_msgs::Pose& getStart() const {
+    return origin_poses_.front();
+  }
+
+  const geometry_msgs::Pose& getGoal() const {
+    return origin_poses_.back();
+  }
+
+  bool has_start_{false};
+  bool has_goal_{false};
 private:
   ros::Subscriber click_pose_sub_;
   ros::Subscriber init_pose_sub_;
   ros::Subscriber move_base_goal_sub_;
 
-  std::vector<geometry_msgs::Pose> origin_poses_;  // 收集原始数据
+  std::vector<geometry_msgs::Pose> origin_poses_;
 };
 
 #endif

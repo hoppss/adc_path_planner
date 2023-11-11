@@ -52,4 +52,5 @@ s.set_points(s_list, y_list);
 [论文推土机-离散点平滑的推导](https://zhuanlan.zhihu.com/p/542558404)
 [海先生的小酒馆]
 
-## other
+## reeds-shepp-path generator
+[ompl reference](https://github.com/gkouros/reeds-shepp-paths-ros)

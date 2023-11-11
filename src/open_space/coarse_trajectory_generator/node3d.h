@@ -56,7 +56,7 @@ class Node3d {
   double x_ = 0.0;
   double y_ = 0.0;
   double phi_ = 0.0;
-  size_t step_size_ = 1;
+  size_t step_size_ = 1;                  // how much points at traversed_x_ vector
   std::vector<double> traversed_x_;
   std::vector<double> traversed_y_;
   std::vector<double> traversed_phi_;

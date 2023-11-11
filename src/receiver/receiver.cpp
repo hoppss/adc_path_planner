@@ -1,4 +1,5 @@
-#include "../receiver/receiver.h"
+#include "receiver.h"
+#include "tools/log.h"
 
 Receiver::Receiver(ros::NodeHandle &node) {
   click_pose_sub_ = node.subscribe("/clicked_point", 1, &Receiver::clickedPointCb, this);
@@ -7,27 +8,25 @@ Receiver::Receiver(ros::NodeHandle &node) {
 }
 
 void Receiver::clickedPointCb(const geometry_msgs::PointStampedConstPtr &p) {
-  std::cout << "clicked" << std::endl;  // 需要地图才能生效
+  AINFO << "clicked";  // 需要地图才能生效
 }
 
 void Receiver::initialPoseCb(const geometry_msgs::PoseWithCovarianceStampedConstPtr &start) {
-  if (is_ready_) {
+  if (has_start_ || has_goal_) {
     origin_poses_.clear();
-    is_ready_ = false;
-    std::cerr << "let's new test" << std::endl;
-    return;
+    has_goal_ = false;
+    AWARN << "new start";
   }
-  std::cout << absl::StrCat("initial: ", start->pose.pose.position.x, ",", start->pose.pose.position.y)
-            << std::endl;
-  geometry_msgs::Pose p;
-  p = start->pose.pose;
 
-  origin_poses_.emplace_back(std::move(p));
+  AINFO << absl::StrCat("initial: ", start->pose.pose.position.x, ",", start->pose.pose.position.y);
+  has_start_ = true;
+  origin_poses_.emplace_back(start->pose.pose);
 }
 
 void Receiver::goalCb(const geometry_msgs::PoseStampedConstPtr &goal) {
-  std::cout << "goal" << std::endl;
-  if (origin_poses_.size() > 2) {
-    is_ready_ = true;
-  }
+  if (!has_start_) return;
+
+  AINFO << absl::StrCat("goal: ", goal->pose.position.x, ",", goal->pose.position.y);
+  has_goal_ = true;
+  origin_poses_.emplace_back(goal->pose);
 }
