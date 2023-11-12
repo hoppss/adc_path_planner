@@ -26,7 +26,9 @@ bool GridSearch::CheckConstraints(std::shared_ptr<Node2d> node) {
   for (const auto& obstacle_linesegments : obstacles_linesegments_vec_) {
     for (const common::LineSegment2d& linesegment :
          obstacle_linesegments) {
-      if (linesegment.DistanceTo({node->GetX(), node->GetY()}) < node_radius_) {
+      if (linesegment.DistanceTo({node->GetX(xy_grid_resolution_,XYbounds_),
+                                  node->GetY(xy_grid_resolution_, XYbounds_)})
+                                    < node_radius_) {
         return false;
       }
     }
@@ -36,8 +38,8 @@ bool GridSearch::CheckConstraints(std::shared_ptr<Node2d> node) {
 
 std::vector<std::shared_ptr<Node2d>> GridSearch::GenerateNextNodes(
     std::shared_ptr<Node2d> current_node) {
-  double current_node_x = current_node->GetX();
-  double current_node_y = current_node->GetY();
+  double current_node_x = current_node->GetGridX();
+  double current_node_y = current_node->GetGridY();
   double current_node_path_cost = current_node->GetPathCost();
   double diagonal_distance = std::sqrt(2.0);
   std::vector<std::shared_ptr<Node2d>> next_nodes;
@@ -180,6 +182,7 @@ bool GridSearch::GenerateDpMap(
       if (!CheckConstraints(next_node)) {
         continue;
       }
+      // ignore if in  close list
       if (dp_map_.find(next_node->GetIndex()) != dp_map_.end()) {
         continue;
       }
@@ -189,6 +192,7 @@ bool GridSearch::GenerateDpMap(
         open_set.emplace(next_node->GetIndex(), next_node);
         open_pq.emplace(next_node->GetIndex(), next_node->GetCost());
       } else {
+        // in open list
         if (open_set[next_node->GetIndex()]->GetCost() > next_node->GetCost()) {
           open_set[next_node->GetIndex()]->SetCost(next_node->GetCost());
           open_set[next_node->GetIndex()]->SetPreNode(current_node);
@@ -223,6 +227,7 @@ void GridSearch::LoadGridAStarResult(GridAStartResult* result) {
   }
   std::reverse(grid_a_x.begin(), grid_a_x.end());
   std::reverse(grid_a_y.begin(), grid_a_y.end());
+  // TODO: convert grid xy to cartisian
   (*result).x = std::move(grid_a_x);
   (*result).y = std::move(grid_a_y);
 }

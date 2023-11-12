@@ -56,7 +56,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 20
+      Plane Cell Count: 40
       Reference Frame: map
       Value: true
     - Alpha: 1
@@ -173,6 +173,14 @@ Visualization Manager:
         {}
       Queue Size: 100
       Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /open_space/bound
+      Name: OpenSpaceBound
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -200,7 +208,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: 1.5599993467330933
+      Angle: 0.0049996087327599525
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -210,10 +218,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 228.00119018554688
+      Scale: 39.37290573120117
       Target Frame: <Fixed Frame>
-      X: 0.5734971761703491
-      Y: -0.764141857624054
+      X: 4.129323959350586
+      Y: 2.232710123062134
     Saved: ~
 Window Geometry:
   Displays:
@@ -231,5 +239,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 2240
+  X: 1920
   Y: 0

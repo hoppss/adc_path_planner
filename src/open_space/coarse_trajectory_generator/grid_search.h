@@ -26,6 +26,12 @@ class Node2d {
     grid_y_ = static_cast<int>((y - XYbounds[2]) / xy_resolution);
     index_ = ComputeStringIndex(grid_x_, grid_y_);
   }
+  Node2d(const int grid_x, const int grid_y,
+         const std::vector<double>& XYbounds) {
+    grid_x_ = grid_x;
+    grid_y_ = grid_y;
+    index_ = ComputeStringIndex(grid_x_, grid_y_);
+  }
   void SetPathCost(const double path_cost) {
     path_cost_ = path_cost;
     cost_ = path_cost_ + heuristic_;
@@ -36,13 +42,18 @@ class Node2d {
   }
   void SetCost(const double cost) { cost_ = cost; }
   void SetPreNode(std::shared_ptr<Node2d> pre_node) { pre_node_ = pre_node; }
-  double GetX() const { return x_; }
-  double GetY() const { return y_; }
+  // fixed in grid_search::checkConstraint
+  double GetX(const double xy_resolution, const std::vector<double>& XYbounds) const {
+     return XYbounds[0] + grid_x_ * xy_resolution;
+  }
+  double GetY(const double xy_resolution, const std::vector<double>& XYbounds) const {
+    return XYbounds[2] + grid_y_ * xy_resolution;
+  }
   double GetGridX() const { return grid_x_; }
   double GetGridY() const { return grid_y_; }
-  double GetPathCost() const { return path_cost_; }
-  double GetHeuCost() const { return heuristic_; }
-  double GetCost() const { return cost_; }
+  double GetPathCost() const { return path_cost_; }   // G
+  double GetHeuCost() const { return heuristic_; }    // H
+  double GetCost() const { return cost_; }            // F
   const std::string& GetIndex() const { return index_; }
   std::shared_ptr<Node2d> GetPreNode() const { return pre_node_; }
   static std::string CalcIndex(const double x, const double y,
@@ -63,13 +74,13 @@ class Node2d {
   }
 
  private:
-  double x_ = 0.0;
+  double x_ = 0.0;  // m
   double y_ = 0.0;
-  int grid_x_ = 0;
+  int grid_x_ = 0;  // grid index
   int grid_y_ = 0;
-  double path_cost_ = 0.0;
-  double heuristic_ = 0.0;
-  double cost_ = 0.0;
+  double path_cost_ = 0.0;  // g
+  double heuristic_ = 0.0;  // h
+  double cost_ = 0.0;       // f
   std::string index_;
   std::shared_ptr<Node2d> pre_node_ = nullptr;
 };
@@ -108,11 +119,11 @@ class GridSearch {
   double xy_grid_resolution_ = 0.0;
   double node_radius_ = 0.0;
   std::vector<double> XYbounds_;
-  double max_grid_x_ = 0.0;
+  double max_grid_x_ = 0.0;   // grid size width
   double max_grid_y_ = 0.0;
   std::shared_ptr<Node2d> start_node_;
   std::shared_ptr<Node2d> end_node_;
-  std::shared_ptr<Node2d> final_node_;
+  std::shared_ptr<Node2d> final_node_; // indicator astar is success
   std::vector<std::vector<common::LineSegment2d>>
       obstacles_linesegments_vec_;
 
@@ -122,6 +133,7 @@ class GridSearch {
       return left.second >= right.second;
     }
   };
+  // dp is closed list of dijkstra, search from goal 
   std::unordered_map<std::string, std::shared_ptr<Node2d>> dp_map_;
 };
 }  // namespace planning

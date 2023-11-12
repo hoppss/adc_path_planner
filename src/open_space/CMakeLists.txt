@@ -11,3 +11,6 @@ add_executable(rs_demo      rs_curve_demo.cpp
                             coarse_trajectory_generator/ompl_reeds_shepp_path.cpp)
 target_link_libraries(rs_demo  planner_common)
 target_link_libraries(rs_demo ${OMPL_LIBRARIES})
+
+add_executable(ha_demo coarse_trajectory_generator/ha_demo.cpp)
+target_link_libraries(ha_demo   planner_common)

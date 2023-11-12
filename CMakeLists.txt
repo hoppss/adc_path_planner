@@ -64,7 +64,11 @@ set(COMMON_SRC  src/common/vec2d.cpp
 
                 # open space
                 src/open_space/coarse_trajectory_generator/node3d.cpp
-                src/open_space/coarse_trajectory_generator/reeds_sheep_path.cpp
+                src/open_space/coarse_trajectory_generator/grid_search.cpp
+                src/open_space/coarse_trajectory_generator/reeds_shepp_path.cpp
+                src/open_space/coarse_trajectory_generator/open_space_map.cpp
+                src/open_space/coarse_trajectory_generator/hybrid_a_star.cpp
+                src/open_space/coarse_trajectory_generator/open_space_map.cpp
 )
 # basic library
 add_library(planner_common ${COMMON_SRC})

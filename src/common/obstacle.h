@@ -47,14 +47,6 @@ class Obstacle {
   // static std::unique_ptr<Obstacle> CreateStaticVirtualObstacles(
   //     const std::string& id, const common::Box2d& obstacle_box);
 
-  // inline bool IsCautionLevelObstacle() const {
-  //   return is_caution_level_obstacle_;
-  // }
-
-  // bool HasLongitudinalDecision() const;
-
-  // bool HasNonIgnoreDecision() const;
-
   // double MinRadiusStopDistance(const common::VehicleParam& vehicle_param) const;
 
 
@@ -64,8 +56,6 @@ class Obstacle {
   bool is_virtual_ = false;
   double speed_ = 0.0;
 
-  bool path_st_boundary_initialized_ = false;
-
   common::Trajectory trajectory_;
   common::Box2d perception_bounding_box_;
 
@@ -74,6 +64,7 @@ class Obstacle {
 
   // std::vector<ObjectDecisionType> decisions_;
   // std::vector<std::string> decider_tags_;
+
   // SLBoundary sl_boundary_;
 
   // STBoundary reference_line_st_boundary_;
@@ -82,14 +73,6 @@ class Obstacle {
   // ObjectDecisionType lateral_decision_;
   // ObjectDecisionType longitudinal_decision_;
 
-  // for keep_clear usage only
-  bool is_blocking_obstacle_ = false;
-
-  bool is_lane_blocking_ = false;
-
-  bool is_lane_change_blocking_ = false;
-
-  bool is_caution_level_obstacle_ = false;
 
   double min_radius_stop_distance_ = -1.0;
 };

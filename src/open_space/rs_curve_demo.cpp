@@ -9,7 +9,7 @@
 
 #include "open_space/planner_open_space_config.h"
 #include "open_space/coarse_trajectory_generator/node3d.h"
-#include "open_space/coarse_trajectory_generator/reeds_sheep_path.h"
+#include "open_space/coarse_trajectory_generator/reeds_shepp_path.h"
 #include "open_space/coarse_trajectory_generator/ompl_reeds_shepp_path.h"
 
 #include "ros/ros.h"

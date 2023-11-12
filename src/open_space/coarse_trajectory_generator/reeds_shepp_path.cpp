@@ -1,4 +1,4 @@
-#include "open_space/coarse_trajectory_generator/reeds_sheep_path.h"
+#include "open_space/coarse_trajectory_generator/reeds_shepp_path.h"
 
 namespace planning {
 
