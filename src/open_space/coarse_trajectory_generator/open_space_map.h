@@ -14,6 +14,7 @@ class OpenSpaceMap {
 
     bool loadMap();
     std::vector<std::vector<common::LineSegment2d>> getBound();
+    common::State getGoal() const { return start_; };
 
   private:
     std::vector<std::vector<common::LineSegment2d>> bounds_;

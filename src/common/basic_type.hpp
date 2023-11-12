@@ -118,7 +118,12 @@ struct VehicleParam {
   double max_steer_angle() const { return max_steer_angle_;};
   double wheel_base() const { return wheel_base_;};
 
-
+  std::string debugString() {
+    return absl::StrCat("VehicleParam [L:", length_, " W: ", width_, " ], front_edge ",
+                front_edge_to_center_, ",back edge: ", back_edge_to_center_,
+                ", L_w: ", left_edge_to_center_, ", R_w: ", right_edge_to_center_,
+                ", min_turn_radius: ", min_turn_radius_, ", steer: ", max_steer_angle_);
+  }
   std::string brand;
   std::string vehicle_id;
 

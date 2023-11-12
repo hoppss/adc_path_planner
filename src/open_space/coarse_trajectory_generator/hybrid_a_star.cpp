@@ -332,26 +332,27 @@ bool HybridAStar::TrajectoryPartition(
 bool HybridAStar::Plan(
     double sx, double sy, double sphi, double ex, double ey, double ephi,
     const std::vector<double>& XYbounds,
-    const std::vector<std::vector<common::Vec2d>>& obstacles_vertices_vec,
+    const std::vector<std::vector<common::LineSegment2d>>& obstacles,
     HybridAStartResult* result) {
   // clear containers
   open_set_.clear();
   close_set_.clear();
   open_pq_ = decltype(open_pq_)();
   final_node_ = nullptr;
-  std::vector<std::vector<common::LineSegment2d>>
-      obstacles_linesegments_vec;
-  for (const auto& obstacle_vertices : obstacles_vertices_vec) {
-    size_t vertices_num = obstacle_vertices.size();
-    std::vector<common::LineSegment2d> obstacle_linesegments;
-    for (size_t i = 0; i < vertices_num - 1; ++i) {
-      common::LineSegment2d line_segment = common::LineSegment2d(
-          obstacle_vertices[i], obstacle_vertices[i + 1]);
-      obstacle_linesegments.emplace_back(line_segment);
-    }
-    obstacles_linesegments_vec.emplace_back(obstacle_linesegments);
-  }
-  obstacles_linesegments_vec_ = std::move(obstacles_linesegments_vec);
+  // std::vector<std::vector<common::LineSegment2d>>
+  //     obstacles_linesegments_vec;
+  // for (const auto& obstacle_vertices : obstacles_vertices_vec) {
+  //   size_t vertices_num = obstacle_vertices.size();
+  //   std::vector<common::LineSegment2d> obstacle_linesegments;
+  //   for (size_t i = 0; i < vertices_num - 1; ++i) {
+  //     common::LineSegment2d line_segment = common::LineSegment2d(
+  //         obstacle_vertices[i], obstacle_vertices[i + 1]);
+  //     obstacle_linesegments.emplace_back(line_segment);
+  //   }
+  //   obstacles_linesegments_vec.emplace_back(obstacle_linesegments);
+  // }
+  // obstacles_linesegments_vec_ = std::move(obstacles_linesegments_vec);
+  obstacles_linesegments_vec_ = obstacles;
   std::stringstream ssm;
   ssm << "roi boundary" << std::endl;
   for (auto vec : obstacles_linesegments_vec_) {
@@ -390,6 +391,7 @@ bool HybridAStar::Plan(
   ssm << XYbounds[0] << ", " << XYbounds[1] << std::endl;
   ssm << XYbounds[2] << ", " << XYbounds[3] << std::endl;
   XYbounds_ = XYbounds;
+  AINFO << ssm.str();
   // load nodes and obstacles
   start_node_.reset(
       new Node3d({sx}, {sy}, {sphi}, XYbounds_, planner_open_space_config_));
@@ -430,6 +432,7 @@ bool HybridAStar::Plan(
     open_pq_.pop();
     // all explore nodes, not only open list, not pop closed node
     std::shared_ptr<Node3d> current_node = open_set_[current_id];
+    AINFO << "explore " << current_node->GetIndex();
     // check if an analystic curve could be connected from current
     // configuration to the end configuration without collision. if so, search
     // ends.

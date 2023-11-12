@@ -10,6 +10,7 @@
 
 #include "common/math_util.h"
 #include "common/obstacle.h"
+#include "common/line_segment2d.h"
 #include "common/vehicle_config_helper.h"
 
 #include "open_space/planner_open_space_config.h"
@@ -38,7 +39,7 @@ class HybridAStar {
 
   bool Plan(double sx, double sy, double sphi, double ex, double ey, double ephi,
             const std::vector<double>& XYbounds,
-            const std::vector<std::vector<common::Vec2d>>& obstacles_vertices_vec,
+            const std::vector<std::vector<common::LineSegment2d>>& obstacles_vertices_vec,
             HybridAStartResult* result);
 
   bool TrajectoryPartition(const HybridAStartResult& result,

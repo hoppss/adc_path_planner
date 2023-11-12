@@ -9,12 +9,12 @@ struct WarmStartConfig {
   double phi_grid_resolution = 0.05;
   unsigned int next_node_num = 10;
   // traveled_distance, edge 积分步长
-  double step_size = 0.5;
-  double traj_forward_penalty = 0.0;
-  double traj_back_penalty = 0.0;
-  double traj_gear_switch_penalty = 100.0;
-  double traj_steer_penalty = 10.0;
-  double traj_steer_change_penalty = 10.0;
+  double step_size = 0.1;
+  double traj_forward_penalty = 1.0;
+  double traj_back_penalty = 1.0;
+  double traj_gear_switch_penalty = 10.0;
+  double traj_steer_penalty = 0.0;
+  double traj_steer_change_penalty = 0.1;
   double traj_kappa_contraint_ratio = 1.0;
 
   // astar grid for heuristic

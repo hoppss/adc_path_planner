@@ -14,7 +14,7 @@ PlannerViz::PlannerViz(ros::NodeHandle& node) {
     node.advertise<visualization_msgs::MarkerArray>("/curve/markers", 100);
 
   marker_array_publisher_ =
-    node.advertise<visualization_msgs::MarkerArray>("/open_space/bound", 100);
+    node.advertise<visualization_msgs::MarkerArray>("/open_space/bound", 100, true);
 }
 
 void PlannerViz::showTrajectoryPath(std::vector<Vec2d> pts) {

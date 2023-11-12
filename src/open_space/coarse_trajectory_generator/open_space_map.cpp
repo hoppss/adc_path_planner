@@ -13,7 +13,7 @@ bool OpenSpaceMap::loadMap() {
     std::string base_path = std::getenv("HOME");
     AINFO << "Home path " << base_path;
 
-    std::string file_name = base_path + "/Documents/catkin_ws/src/adc_path_planner/src/open_space/coarse_trajectory_generator/reverse_verticle_1.txt";
+    std::string file_name = base_path + "/Documents/catkin_ws/src/adc_path_planner/src/open_space/coarse_trajectory_generator/reverse_verticle_2.txt";
     AINFO << "File path " << file_name;
 
 	std::ifstream in_file;
