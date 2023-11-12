@@ -6,8 +6,10 @@
 #include "rviz_tool/planner_viz.h"
 #include "open_space/coarse_trajectory_generator/hybrid_a_star.h"
 #include "open_space/planner_open_space_config.h"
+#include "receiver/receiver.h"
 
 #include "ros/ros.h"
+#include "tf2/utils.h"
 
 int main(int argc, char** argv)
 {
@@ -16,6 +18,7 @@ int main(int argc, char** argv)
     common::VehicleParam  veh_param = common::VehicleConfigHelper::GetConfig().vehicle_param;
     AINFO << veh_param.debugString();
 
+    Receiver handle(node);
     PlannerViz viz(node);
 
     OpenSpaceMap osm;
@@ -28,7 +31,7 @@ int main(int argc, char** argv)
     viz.showBounds(bounds);
 
 
-    // decide astar bound
+    // decide astar local bound
     std::vector<double> bound;
     bound.resize(4);
     double max_x = std::numeric_limits<double>::lowest();
@@ -73,19 +76,38 @@ int main(int argc, char** argv)
     PlannerOpenSpaceConfig config;
     planning::HybridAStar hastar(config);
 
+    // planning::HybridAStartResult result;
+    // if (!hastar.Plan(0, 0, 0, 10, 10, 1.57, bound, bounds, &result)) {
+    //     AERROR << "hastar plan failed";
+    //     return -1;
+    // }
+
     planning::HybridAStartResult result;
-    if (!hastar.Plan(0, 0, 0, 10, 10, 1.57, bound, bounds, &result)) {
-        AERROR << "hastar plan failed";
-        return -1;
-    }
     std::vector<common::State> path;
 
-    for(size_t i=0; i<result.x.size(); ++i) {
-        path.emplace_back(result.x[i], result.y[i], result.phi[i]);
-    }
-    ros::Rate r(3);
+    ros::Rate r(1);
     while(ros::ok()) {
+
         viz.showBounds(osm.getBound());
+
+        if (handle.isReady()) {
+            geometry_msgs::Pose start = handle.getStart();
+            geometry_msgs::Pose goal = handle.getGoal();
+            if (hastar.Plan(start.position.x, start.position.y, tf2::getYaw(start.orientation),
+                            goal.position.x,  goal.position.y,  tf2::getYaw(goal.orientation),
+                            bound, bounds, &result)) {
+                path.clear();
+                for(size_t i=0; i<result.x.size(); ++i) {
+                    path.emplace_back(result.x[i], result.y[i], result.phi[i]);
+                }
+            } else {
+                AERROR << "hastar plan failed";
+            }
+
+            handle.reset();
+        } else {
+            AINFO << " not ready ... ";
+        }
         viz.showTrajectoryPath(path, 0);
         ros::spinOnce();
         r.sleep();

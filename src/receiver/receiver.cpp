@@ -12,11 +12,9 @@ void Receiver::clickedPointCb(const geometry_msgs::PointStampedConstPtr &p) {
 }
 
 void Receiver::initialPoseCb(const geometry_msgs::PoseWithCovarianceStampedConstPtr &start) {
-  if (has_start_ || has_goal_) {
-    origin_poses_.clear();
-    has_goal_ = false;
-    AWARN << "new start";
-  }
+  origin_poses_.clear();
+  has_goal_ = false;
+  AWARN << "new start";
 
   AINFO << absl::StrCat("initial: ", start->pose.pose.position.x, ",", start->pose.pose.position.y);
   has_start_ = true;

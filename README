@@ -54,3 +54,7 @@ s.set_points(s_list, y_list);
 
 ## reeds-shepp-path generator
 [ompl reference](https://github.com/gkouros/reeds-shepp-paths-ros)
+
+## steering function, G2 （曲率）连续
+[steering function with apollo openspace ](https://github.com/LLLLLyra/hybrid_a_star_g2/blob/main/src/plan/reeds_shepp_path_g2.cc)
+[steering function pkg](https://github.com/hbanzhaf/steering_functions)
