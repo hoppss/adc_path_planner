@@ -7,8 +7,12 @@ using common::LineSegment2d;
 }  // namespace
 
 PlannerViz::PlannerViz(ros::NodeHandle& node) {
-  curve_path_pub_ = node.advertise<nav_msgs::Path>("/curve/path", 100);
+  curve_path_pub_  = node.advertise<nav_msgs::Path>("/curve/path0", 100);
+  curve_path_pub1_ = node.advertise<nav_msgs::Path>("/curve/path1", 100);
   curve_path_pub2_ = node.advertise<nav_msgs::Path>("/curve/path2", 100);
+  curve_path_pub3_ = node.advertise<nav_msgs::Path>("/curve/path3", 100);
+  curve_path_pub4_ = node.advertise<nav_msgs::Path>("/curve/path4", 100);
+  curve_path_pub5_ = node.advertise<nav_msgs::Path>("/curve/path5", 100);
 
   curve_ma_pub_ =
     node.advertise<visualization_msgs::MarkerArray>("/curve/markers", 100);
@@ -70,10 +74,21 @@ void PlannerViz::showTrajectoryPath(const std::vector<State>& pts, int i) {
 
     path.poses.emplace_back(pose);
   }
-  if (i == 0)
+
+  if (i == 0) {
     curve_path_pub_.publish(std::move(path));
-  else
+  }
+  else if (i == 1)
+    curve_path_pub1_.publish(std::move(path));
+  else if (i == 2) {
     curve_path_pub2_.publish(std::move(path));
+  } else if (i == 3) {
+    curve_path_pub3_.publish(std::move(path));
+  } else if (i == 4) {
+    curve_path_pub4_.publish(std::move(path));
+  }
+  else
+    curve_path_pub5_.publish(std::move(path));
 }
 
 void PlannerViz::showBounds(std::vector<std::vector<common::LineSegment2d>> bounds) {

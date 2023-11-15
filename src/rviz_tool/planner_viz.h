@@ -28,7 +28,11 @@ class PlannerViz {
 
  private:
   ros::Publisher curve_path_pub_;
+  ros::Publisher curve_path_pub1_;
   ros::Publisher curve_path_pub2_;
+  ros::Publisher curve_path_pub3_;
+  ros::Publisher curve_path_pub4_;
+  ros::Publisher curve_path_pub5_;
   ros::Publisher curve_ma_pub_;
 
   ros::Publisher marker_array_publisher_;

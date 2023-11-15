@@ -29,9 +29,9 @@ bool UOSReadTrajFile(const std::string &filename,
     if (line == "" || line.find("nan") != std::string::npos) continue;
 
     const std::vector<std::string> tokens =
-        absl::StrSplit(line, absl::ByAnyChar(","));
+        absl::StrSplit(line, absl::ByAnyChar("\t"));
     if (tokens.size() < 6) {
-      AWARN << "[ReadTrajectoryFile]:the data dimension does not match" << line;
+      AWARN << "[ReadTrajectoryFile]:the data dimension does not match: " << line;
       continue;
     }
 
@@ -45,7 +45,7 @@ bool UOSReadTrajFile(const std::string &filename,
   }
 
   file_in.close();
-  AINFO << "[ReadTrajectoryFile] read trajectory file successfully points"
+  AINFO << "[ReadTrajectoryFile] read trajectory file successfully points "
         << complete_rtk_trajectory_.size();
 
   return true;
